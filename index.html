@@ -72,6 +72,12 @@
         var perHourValue;
         var perSecValue;
         
+        document.getElementById("dis").value='0';
+        document.getElementById("hour").value='0';
+        document.getElementById("min").value='0';
+        document.getElementById("sec").value='0';   
+        
+        
         function GetValue(){        
             
             //입력값 저장
@@ -100,24 +106,31 @@
             const transMin = timeToMin / fDis;
             const transSec = Math.round(transMin % Math.floor(transMin)*60);
             pace_Min = transMin
+            
             if(transSec < 10){
-               pace_result= parseInt(transMin) + ':' + '0' + parseInt(transSec);
+               pace_result = parseInt(transMin) + ':' + '0' + parseInt(transSec);
+            }         
+            else if(transSec > 9) {
+                pace_result = parseInt(transMin) + ':' + parseInt(transSec);
             }
             else{
-                pace_result= parseInt(transMin) + ':' + parseInt(transSec);
-            }    
+                pace_result = "00" + ':' + parseInt((transMin.toFixed(2) * 10 ) * 6);
+            }
+                      
+            console.log(transMin.toFixed(2));
+            console.log(transSec);
             
             //================= 시속 =================//
             const transPerHour = Math.floor((fDis / timeToHour) * 1000) / 1000;
             const cPerHour = Math.round(transPerHour * 100) * 0.01;
-            perHour_result = cPerHour;
+            perHour_result = cPerHour.toFixed(2);
           
             //================= 초속 =================//
             const disToMeter = fDis * 1000;
             const transPerSec = (disToMeter / timeToSec).toFixed(2);
             perSec_result = transPerSec;
-            
         }
+        
         
         function CalculateBtn(){        //변환 버튼 함수
             GetValue();
@@ -138,7 +151,7 @@
             const iptValue = [];
             for(let i = 0; i<count;i++ ){
                 iptValue[i] = document.getElementsByClassName("ipt_box")[i];
-                iptValue[i].value = null;
+                iptValue[i].value = '0';
             }     
             paceValue.value = null;
             perHourValue.value = null;
